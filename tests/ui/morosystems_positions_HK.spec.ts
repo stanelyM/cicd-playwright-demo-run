@@ -21,10 +21,9 @@ test("Kariéra – filter positions by city", async ({ page }) => {
     .getByRole("navigation")
     .getByRole("link", { name: /^Kariéra$/ });
 
-  await Promise.all([
-    page.waitForURL("**/kariera**"),
-    careerLink.click(),
-  ]);
+  await careerLink.click();
+  await page.waitForURL('**/kariera**');
+
 
   // Jobs section – keep ID, but assert it is really ready
   const positions = page.locator("#pozice");
