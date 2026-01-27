@@ -21,8 +21,10 @@ test("Kariéra – filter positions by city", async ({ page }) => {
     .getByRole("navigation")
     .getByRole("link", { name: /^Kariéra$/ });
 
-  await careerLink.click();
-  await expect(page).toHaveURL(/\/kariera/);
+  await Promise.all([
+    page.waitForURL("**/kariera**"),
+    careerLink.click(),
+  ]);
 
   // Jobs section – keep ID, but assert it is really ready
   const positions = page.locator("#pozice");
@@ -49,6 +51,21 @@ test("Kariéra – filter positions by city", async ({ page }) => {
 
   // Verify at least one job (Developer or Engineer)
   await expect(jobLinks.first()).toBeVisible();
+
+  // Disable animations for screenshot
+  await page.addStyleTag({
+    content: `
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        caret-color: transparent !important;
+      }
+  
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    `
+  });
 
   // Verify screenshot
   await expect(page).toHaveScreenshot();
