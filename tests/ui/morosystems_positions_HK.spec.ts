@@ -19,7 +19,7 @@ test("Kariéra – filter positions by city", async ({ page }) => {
   // Navigate to Kariéra (semantic + wait for navigation)
   const careerLink = page
     .getByRole("navigation")
-    .getByRole("link", { name: /^Kariéra$/ });
+    .getByRole("link", { name: 'Kariéra' });
 
   await Promise.all([
     page.waitForURL("**/kariera**"),
