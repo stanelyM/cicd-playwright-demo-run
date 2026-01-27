@@ -8,6 +8,9 @@ test.beforeEach(async ({ page }) => {
   await page.route(/cookiescript|cookie-script|consent/i, route => route.abort());
 });
 
+
+// Test to find at least one job in Hradec Králové
+// Google search not implemented because it is not deterministic
 test("Kariéra – filter positions by city", async ({ page }) => {
   await page.goto("https://www.morosystems.cz/", {
     waitUntil: "domcontentloaded",
@@ -46,7 +49,9 @@ test("Kariéra – filter positions by city", async ({ page }) => {
     name: /Developer|Engineer/i,
   });
 
+  // Verify at least one job (Developer or Engineer)
   await expect(jobLinks.first()).toBeVisible();
 
+  // Verify screenshot
   await expect(page).toHaveScreenshot();
 });

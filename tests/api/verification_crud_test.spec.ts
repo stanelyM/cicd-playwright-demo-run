@@ -10,6 +10,8 @@ const assertOk = (res: any, label: string) => {
 
 const BASE_URL = "http://localhost:8080";
 
+
+// Added some verification to api test with more functionality
 test("API Verification CRUD test", async ({ request }) => {
 
   // Helper to get all tasks
@@ -24,6 +26,7 @@ test("API Verification CRUD test", async ({ request }) => {
 
   // 1) GET tasks (baseline)
   const tasksBefore = await getTasksWrapper();
+
 
   // 2) CREATE task
   const createText = "New task from CRUD automation test";
@@ -49,13 +52,13 @@ test("API Verification CRUD test", async ({ request }) => {
   const updated = await updateRes.json();
   expect(updated.text, "Update response text should match").toBe(updateText);
   
-
   // Verify update persisted (source of truth)
   const tasksAfterUpdate = await getTasksWrapper();
   const found = tasksAfterUpdate.find((t:any) => typeof t === "object" && t !== null && "id" in t && t.id === id);
 
   expect(found, "Updated task should exist in GET /tasks").toBeTruthy();
   expect(found!.text, "Updated task should have updated text").toBe(updateText);
+
 
   // 4) DELETE task
   const deleteRes = await request.delete(`${BASE_URL}/tasks/${id}`);

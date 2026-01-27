@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 
+// Simple API test with hardcoded URL to api
 test ('API CRUD test', async ({ request }) => {
 
     // Calling GET request

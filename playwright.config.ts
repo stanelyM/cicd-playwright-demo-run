@@ -44,20 +44,34 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'api',
+      testDir: 'tests/api',
+      use: {
+        // No browser needed
+        baseURL: 'http://localhost:8080',
+      },
     },
-
+    {
+      name: 'chromium',
+      testDir: 'tests/ui',
+      use: {
+        browserName: 'chromium',
+      },
+    },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      testDir: 'tests/ui',
+      use: {
+        browserName: 'firefox',
+      },
     },
-
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      testDir: 'tests/ui',
+      use: {
+        browserName: 'webkit',
+      },
     },
-
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
