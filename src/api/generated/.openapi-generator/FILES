@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+apis/TasksApi.ts
+apis/index.ts
+docs/CreateTask.md
+docs/Task.md
+docs/TasksApi.md
+docs/UpdateTask.md
+index.ts
+models/CreateTask.ts
+models/Task.ts
+models/UpdateTask.ts
+models/index.ts
+runtime.ts
