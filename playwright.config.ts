@@ -32,7 +32,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
 
-  timeout: 30000,            // ⏱ max time for a single test (60s)
+  timeout: 60000,            // ⏱ max time for a single test (60s)
 
   expect: {
     timeout: 10000,          // ⏱ expect() retries (10s)

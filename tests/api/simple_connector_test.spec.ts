@@ -16,10 +16,18 @@ test('Simple connector test', async ({ request }) => {
   console.log(response);
  
   
-  // Example how to call DELETE
+  // Example how to call POST
   const task = await api.tasksPost({
     createTask: {
       text: 'Text added from OpenAPI generated connector',
+    },
+  });
+
+  // Example how to call UPDATE
+  await api.tasksIdPost({
+    id: task.id,
+    updateTask: {
+      text: 'Update Text changed by OpenAPI generated connector',
     },
   });
 
