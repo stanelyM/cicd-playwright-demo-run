@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
 
 // Wider viewport so menu & filters are visible
 test.use({ viewport: { width: 1540, height: 900 } });
@@ -7,7 +7,6 @@ test.beforeEach(async ({ page }) => {
   // Best-effort cookie blocking (should not break test if script changes)
   await page.route(/cookiescript|cookie-script|consent/i, route => route.abort());
 });
-
 
 // Test to find at least one job in Hradec Králové
 // Google search not implemented because it is not deterministic (blocking bots)
@@ -52,6 +51,38 @@ test("Kariéra – filter positions by city", async ({ page }) => {
   // Verify at least one job (Developer or Engineer)
   await expect(jobLinks.first()).toBeVisible();
 
+  // Prepare page for screenshot
+  preparePageForScreenshot(page);
+
   // Verify screenshot
   await expect(page).toHaveScreenshot();
 });
+
+
+export const preparePageForScreenshot = async (page: Page) => {
+  // Remove hover state
+  await page.mouse.move(0, 0);
+  await page.mouse.move(1, 1);
+
+  // Remove focus state
+  await page.evaluate(() => {
+    (document.activeElement as HTMLElement | null)?.blur();
+  });
+
+  // Disable animations, transitions, hover effects
+  await page.addStyleTag({
+    content: `
+      * {
+        transition: none !important;
+        animation: none !important;
+        caret-color: transparent !important;
+      }
+      *:hover {
+        background-color: inherit !important;
+      }
+    `,
+  });
+
+  // Let styles apply (important for CI)
+  await page.waitForTimeout(50);
+};
