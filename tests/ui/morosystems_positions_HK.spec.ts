@@ -68,21 +68,5 @@ export const preparePageForScreenshot = async (page: Page) => {
   await page.evaluate(() => {
     (document.activeElement as HTMLElement | null)?.blur();
   });
-
-  // Disable animations, transitions, hover effects
-  await page.addStyleTag({
-    content: `
-      * {
-        transition: none !important;
-        animation: none !important;
-        caret-color: transparent !important;
-      }
-      *:hover {
-        background-color: inherit !important;
-      }
-    `,
-  });
-
-  // Let styles apply (important for CI)
-  await page.waitForTimeout(50);
+  
 };
